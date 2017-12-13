@@ -22,7 +22,35 @@ namespace Wpf_ImagesList
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
+        }
+
+
+
+        public List<ViewItem> lstImages
+        {
+            get { return (List<ViewItem>)GetValue(lstImagesProperty); }
+            set { SetValue(lstImagesProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for lstImages.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty lstImagesProperty =
+            DependencyProperty.Register("lstImages", typeof(List<ViewItem>), typeof(MainWindow), new PropertyMetadata(new List<ViewItem>()));
+
+
+        private void btnLoadFolderPath_Click(object sender, RoutedEventArgs e)
+        {
+            lstImages.Clear();
+            Image imgTemp;
+            List<string> lstFileNames = new List<string>(System.IO.Directory.EnumerateFiles(txtFolderPath.Text, "*.jpg"));
+            foreach (string fileName in lstFileNames)
+            {
+                imgTemp = new Image();
+                imgTemp.Source = new BitmapImage(new Uri(fileName));
+                imgTemp.Height = imgTemp.Width = 100;
+                lstImages.Add(new ViewItem(fileName, new BitmapImage(new Uri(fileName))));                
+            }
+            lstView.ItemsSource = lstImages;
         }
     }
 }

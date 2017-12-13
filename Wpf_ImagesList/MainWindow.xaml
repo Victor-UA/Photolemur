@@ -5,8 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_ImagesList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525"
+        Name="mainWindow">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="90"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Name="txtFolderPath" MinWidth="120" Margin="5" Text="C:\Users\tokma001\Pictures"/>
+            <Button Grid.Column="1" Name="btnLoadFolderPath" Content="Load" MinWidth="80" Margin="5" Click="btnLoadFolderPath_Click"/>
+        </Grid>
+        <ListView Name="lstView" Grid.Row="1" Margin="0,0.2,-0.4,-242.4" ItemsSource="{Binding lstImages}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel Margin="0,0,20,10" Width="100" VerticalAlignment="Stretch">
+                        <Viewbox Height="100" DockPanel.Dock="Top">
+                            <Image Source="{Binding ImageData}" HorizontalAlignment="Center" VerticalAlignment="Top"  Stretch="Uniform" />
+                        </Viewbox>
+                        <TextBlock Text="{Binding Title}"  DockPanel.Dock="Bottom" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                    </DockPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>
